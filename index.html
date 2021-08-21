@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="app.js"></script>
+
+
+
+    <title>Crud Cachorros</title>
+
+    <style>
+        .mostra-modal {
+            z-index: 10;
+            border: 1px black;
+            position: absolute;
+            left: 10%;
+            top: 10%;
+            width: 80%;
+            height: 80%;
+            box-shadow: 2px 2px 10px black;
+            background-color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <body>
+        <div class="container">
+            <h1>Cachorros</h1>
+
+            <div class="row">
+                <div class="progress" id="loader">
+                    <div class="indeterminate"></div>
+                </div>
+            </div>
+
+            <table class="striped">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Dono</th>
+                        <th>Telefone</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody id="table-cachorros">
+                </tbody>
+            </table>
+
+            <div class="row">
+                <div class="col s1 offset-s11">
+                    <a class="btn-floating btn-large red" onclick="mostraModal()">
+                        <i class="large material-icons">add</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="hide" id='modal-form'>
+            <div class="container">
+                <h3>Cadastrar novo cachorro</h3>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="cachorro_nome" type="text" class="validate">
+                        <label for="cachorro_nome">Nome Cachorro</label>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="cachorro_dono" type="text" class="validate">
+                        <label for="cachorro_dono">Dono</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="cachorro_telefone" type="text" class="validate">
+                        <label for="cachorro_telefone">Telefone</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <textarea id="cachorro_observacoes" class="materialize-textarea"></textarea>
+                        <label for="cachorro_observacoes">Observações</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s2 offset-s9">
+                        <button class="btn waves-effect waves-light " type="button" onclick="escondeModal()">Cancelar</button>
+                    </div>
+                    <div class="col s1">
+                        <button class="btn waves-effect waves-light " type="button" onclick="salvarCachorro()">Salvar</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </body>
+
+</body>
+
+</html>
