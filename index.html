@@ -61,7 +61,7 @@
 
             <div class="row">
                 <div class="col s1 offset-s11">
-                    <a class="btn-floating btn-large red" onclick="mostraModal()">
+                    <a class="btn-floating btn-large red" onclick="mostrarModalSalvarCachorro()">
                         <i class="large material-icons">add</i>
                     </a>
                 </div>
@@ -71,7 +71,9 @@
 
         <div class="hide" id='modal-form'>
             <div class="container">
-                <h3>Cadastrar novo cachorro</h3>
+                <h3 id="titulo_modal">Cadastrar novo cachorro</h3>
+                <input id="cachorro_id" type="text" style="display: none;" class="" class="validate">
+
                 <div class="row">
                     <div class="input-field col s12">
                         <input id="cachorro_nome" type="text" class="validate">
@@ -97,10 +99,12 @@
                 </div>
                 <div class="row">
                     <div class="col s2 offset-s9">
-                        <button class="btn waves-effect waves-light " type="button" onclick="escondeModal()">Cancelar</button>
+                        <button class="btn waves-effect waves-light " type="button"
+                            onclick="escondeModal()">Cancelar</button>
                     </div>
                     <div class="col s1">
-                        <button class="btn waves-effect waves-light " type="button" onclick="salvarCachorro()">Salvar</button>
+                        <button id="btn-form-cachorro" class="btn waves-effect waves-light " type="button"
+                            onclick="salvarCachorro()">Salvar</button>
                     </div>
                 </div>
 

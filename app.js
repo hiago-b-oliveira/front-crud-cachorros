@@ -1,4 +1,9 @@
 
+document.addEventListener("DOMContentLoaded", function () {
+    carregaCachorros()
+});
+
+
 function excluiCachorro(idCachorro) {
     const ok = confirm("Você realmente deseja excluir o cachorro?")
     if (ok) {
@@ -13,11 +18,13 @@ function excluiCachorro(idCachorro) {
 }
 
 function salvarCachorro() {
+    const idDom = document.getElementById('cachorro_id')
     const nomeDom = document.getElementById('cachorro_nome')
     const donoDom = document.getElementById('cachorro_dono')
     const telefoneDom = document.getElementById('cachorro_telefone')
     const observacoesDOM = document.getElementById('cachorro_observacoes')
 
+    const id = idDom.value
     const corpo = {
         nome: nomeDom.value,
         dono: donoDom.value,
@@ -25,28 +32,67 @@ function salvarCachorro() {
         observacoes: observacoesDOM.value
     }
 
+    idDom.value = ''
     nomeDom.value = ''
     donoDom.value = ''
     telefoneDom.value = ''
     observacoesDOM.value = ''
 
+
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
+    const metodo = id ? 'PUT' : 'POST'
+    const url = id ? `http://localhost:3000/cachorros/${id}` : "http://localhost:3000/cachorros"
+
     var requestOptions = {
-        method: 'POST',
+        method: metodo,
         headers: myHeaders,
         body: JSON.stringify(corpo),
     };
 
     mostraLoader()
-    fetch("http://localhost:3000/cachorros", requestOptions)
+    fetch(url, requestOptions)
         .then(function (result) {
             escondeModal()
             carregaCachorros()
             escondeLoader()
         })
         .catch(error => console.log('error', error));
+
+}
+
+function mostrarModalSalvarCachorro() {
+    ativaFuncaoCadastrar()
+    mostraModal()
+}
+
+function atualizaCachorro(id) {
+    ativaFuncaoAtualizar()
+    mostraModal()
+    mostraLoader()
+    fetch(`http://localhost:3000/cachorros/${id}`, {
+        method: 'GET',
+    })
+        .then(result => result.json())
+        .then(function (cachorro) {
+            console.log(cachorro)
+
+            const idDom = document.getElementById('cachorro_id')
+            const nomeDom = document.getElementById('cachorro_nome')
+            const donoDom = document.getElementById('cachorro_dono')
+            const telefoneDom = document.getElementById('cachorro_telefone')
+            const observacoesDOM = document.getElementById('cachorro_observacoes')
+
+            idDom.value = cachorro.id
+            nomeDom.value = cachorro.nome
+            donoDom.value = cachorro.dono
+            telefoneDom.value = cachorro.telefone
+            observacoesDOM.value = cachorro.observacoes
+
+            M.updateTextFields()
+            escondeLoader()
+        })
 
 }
 
@@ -74,7 +120,7 @@ function carregaCachorros() {
                     <td>${cachorro.dono}</td>
                     <td>${cachorro.telefone}</td>
                     <td>
-                        <a onclick="alert('edit${cachorro.id}')">
+                        <a onclick="atualizaCachorro(${cachorro.id})">
                             <i class=" material-icons">edit</i>
                         </a>
                         <a onclick="excluiCachorro(${cachorro.id})">
@@ -99,12 +145,6 @@ function escondeLoader() {
     loaderDom.classList.add("hide");
 }
 
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    carregaCachorros()
-});
-
 function mostraModal() {
     const div = document.getElementById('modal-form')
     div.classList.add('mostra-modal')
@@ -116,4 +156,20 @@ function escondeModal() {
     const div = document.getElementById('modal-form')
     div.classList.remove('mostra-modal')
     div.classList.add('hide')
+}
+
+function ativaFuncaoAtualizar() {
+    const botaoDom = document.getElementById('btn-form-cachorro')
+    botaoDom.innerHTML = 'atualizar'
+
+    const titulo = document.getElementById('titulo_modal')
+    titulo.innerHTML = 'Atualizar Cachorro'
+}
+
+function ativaFuncaoCadastrar() {
+    const botaoDom = document.getElementById('btn-form-cachorro')
+    botaoDom.innerHTML = 'salvar'
+
+    const titulo = document.getElementById('titulo_modal')
+    titulo.innerHTML = 'Cadastrar um Cachorro'
 }
