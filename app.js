@@ -1,3 +1,6 @@
+const SERVER_URL = 'http://localhost:3000'
+
+
 
 document.addEventListener("DOMContentLoaded", function () {
     carregaCachorros()
@@ -8,7 +11,7 @@ function excluiCachorro(idCachorro) {
     const ok = confirm("Você realmente deseja excluir o cachorro?")
     if (ok) {
         mostraLoader()
-        fetch(`http://localhost:3000/cachorros/${idCachorro}`, {
+        fetch(`${SERVER_URL}/cachorros/${idCachorro}`, {
             method: 'DELETE'
         }).then(function () {
             carregaCachorros()
@@ -43,7 +46,7 @@ function salvarCachorro() {
     myHeaders.append("Content-Type", "application/json");
 
     const metodo = id ? 'PUT' : 'POST'
-    const url = id ? `http://localhost:3000/cachorros/${id}` : "http://localhost:3000/cachorros"
+    const url = id ? `${SERVER_URL}/cachorros/${id}` : `${SERVER_URL}/cachorros`
 
     var requestOptions = {
         method: metodo,
@@ -71,7 +74,7 @@ function atualizaCachorro(id) {
     ativaFuncaoAtualizar()
     mostraModal()
     mostraLoader()
-    fetch(`http://localhost:3000/cachorros/${id}`, {
+    fetch(`${SERVER_URL}/cachorros/${id}`, {
         method: 'GET',
     })
         .then(result => result.json())
@@ -100,7 +103,7 @@ function carregaCachorros() {
     const myHeaders = new Headers();
 
     mostraLoader()
-    fetch("http://localhost:3000/cachorros/", {
+    fetch(`${SERVER_URL}/cachorros/`, {
         method: 'GET',
         headers: myHeaders
     })
